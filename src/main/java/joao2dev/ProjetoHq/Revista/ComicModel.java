@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 public class ComicModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    long idHQ;
+    Long idHQ;
     String tituloHq;
     int anoDeLancamentoHq;
     int edicaoHq;

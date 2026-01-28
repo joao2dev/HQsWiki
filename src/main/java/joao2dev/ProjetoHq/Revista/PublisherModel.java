@@ -15,7 +15,7 @@ import java.util.List;
 public class PublisherModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    long idEditora;
+    Long idEditora;
     String nomeDaEditora;
     String PaísDaEditora;
 

@@ -15,7 +15,7 @@ import java.util.List;
 public class Character {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    long idPersonagem;
+    Long idPersonagem;
     String nomePersonagem;
     String universoDoPersonagem;
     String poderesDoPersonagem;
