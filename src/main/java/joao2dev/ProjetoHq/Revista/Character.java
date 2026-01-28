@@ -15,9 +15,16 @@ import java.util.List;
 public class Character {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     Long idPersonagem;
+
+    @Column(name = "nome")
     String nomePersonagem;
+
+    @Column(name = "universo")
     String universoDoPersonagem;
+
+    @Column(name = "poderes")
     String poderesDoPersonagem;
 
 //  relacionando  PERSONAGEM com HQ

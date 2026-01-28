@@ -15,8 +15,13 @@ import java.util.List;
 public class PublisherModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     Long idEditora;
+
+    @Column(name = "nome")
     String nomeDaEditora;
+
+    @Column(name = "pais")
     String PaísDaEditora;
 
     //  relacionando  EDITORA com HQ

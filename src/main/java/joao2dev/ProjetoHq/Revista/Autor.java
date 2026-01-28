@@ -15,12 +15,17 @@ import java.util.List;
 public class Autor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     Long idAutor;
+
+    @Column(name = "nome")
     String nomeAutor;
+
+    @Column(name = "nacionalidade")
     String nacionalidadeAutor;
 
     //  relacinamento do AUTOR com HQ
-    @ManyToMany(mappedBy = "autor")
+    @ManyToMany(mappedBy = "autores")
     private List<ComicModel> revista;
 
 }
