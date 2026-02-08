@@ -1,5 +1,6 @@
 package joao2dev.ProjetoHq.Revista;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,7 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class Character {
+public class CharacterModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -29,5 +30,6 @@ public class Character {
 
 //  relacionando  PERSONAGEM com HQ
     @ManyToMany(mappedBy = "personagens")
+    @JsonIgnore
     private List<ComicModel> revista;
 }

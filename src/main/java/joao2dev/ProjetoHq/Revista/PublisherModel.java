@@ -1,5 +1,6 @@
 package joao2dev.ProjetoHq.Revista;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -26,5 +27,6 @@ public class PublisherModel {
 
     //  relacionando  EDITORA com HQ
     @OneToMany(mappedBy = "editora")
+    @JsonIgnore
     private List<ComicModel> revista;
 }

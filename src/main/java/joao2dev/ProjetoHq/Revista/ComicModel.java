@@ -1,10 +1,13 @@
 package joao2dev.ProjetoHq.Revista;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -49,7 +52,8 @@ public class ComicModel {
             joinColumns = @JoinColumn(name = "hq_id"),
             inverseJoinColumns = @JoinColumn(name = "autor_id")
     )
-    private List<Autor> autores;
+    @JsonIgnoreProperties("revista")
+    private List<AutorModel> autores = new ArrayList<>();
 
     // HQ ↔ PERSONAGENS
     @ManyToMany
@@ -58,5 +62,6 @@ public class ComicModel {
             joinColumns = @JoinColumn(name = "hq_id"),
             inverseJoinColumns = @JoinColumn(name = "personagem_id")
     )
-    private List<Character> personagens;
+
+    private List<CharacterModel> personagens ;
 }

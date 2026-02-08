@@ -1,10 +1,12 @@
 package joao2dev.ProjetoHq.Revista;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -12,7 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class Autor {
+public class AutorModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -26,6 +28,7 @@ public class Autor {
 
     //  relacinamento do AUTOR com HQ
     @ManyToMany(mappedBy = "autores")
-    private List<ComicModel> revista;
+
+    private List<ComicModel> revista = new ArrayList<>();
 
 }
