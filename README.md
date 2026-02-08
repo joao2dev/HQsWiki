@@ -1,1 +1,1 @@
-# HQ WIKI
+# HQsWIKI
