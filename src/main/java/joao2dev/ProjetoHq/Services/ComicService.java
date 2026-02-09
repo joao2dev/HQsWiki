@@ -1,10 +1,7 @@
 package joao2dev.ProjetoHq.Services;
 
 import jakarta.transaction.Transactional;
-import joao2dev.ProjetoHq.Repositorys.AutorRepository;
-import joao2dev.ProjetoHq.Repositorys.CharacterRepository;
 import joao2dev.ProjetoHq.Repositorys.ComicRepository;
-import joao2dev.ProjetoHq.Repositorys.PublisherRepository;
 import joao2dev.ProjetoHq.Revista.ComicModel;
 import joao2dev.ProjetoHq.dto.ComicRequestDTO;
 import joao2dev.ProjetoHq.dto.ComicResponseDTO;
@@ -29,6 +26,7 @@ public class ComicService {
 
         ComicModel comicModel = mapper.paraComicModel(dto);
         ComicModel salvo = comicRepository.save(comicModel);
+        validarComic(comicModel);
         return mapper.paraComicResponseDTO(salvo);
     }
 
@@ -46,9 +44,9 @@ public class ComicService {
     }
 
     // 📌 Buscar por título
-    public List<ComicResponseDTO> buscarComicPorTitulo(String titulo) {
+    public List<ComicResponseDTO> buscarComicPorTitulo(String tituloHq) {
         return mapper.paraListaComicResponse(
-                comicRepository.findByTituloHqContainingIgnoreCase(titulo)
+                comicRepository.findByTituloHqIgnoreCase(tituloHq)
         );
     }
 
@@ -83,11 +81,11 @@ public class ComicService {
             throw new RuntimeException("Título da HQ é obrigatório.");
         }
 
-        if (comicModel.getAnoDeLancamentoHq() < 1800) {
+        if (comicModel.getAnolancamento() < 0) {
             throw new RuntimeException("Ano de lançamento inválido.");
         }
 
-        if (comicModel.getGeneroHq() == null || comicModel.getGeneroHq().isBlank()) {
+        if (comicModel.getGenero() == null || comicModel.getGenero().isBlank()) {
             throw new RuntimeException("Gênero da HQ é obrigatório.");
         }
 

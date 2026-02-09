@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface CharacterRepository extends JpaRepository<CharacterModel, Long> {
-    List<CharacterModel> findByNomePersonagem(String nomePersonagem);
+   /* List<CharacterModel> findByNomePersonagem(String nomePersonagem);*/
 
 
 }

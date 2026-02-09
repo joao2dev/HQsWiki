@@ -16,17 +16,8 @@ import java.util.List;
 public class PublisherModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    Long idEditora;
+    private Long id;
 
-    @Column(name = "nome")
-    String nomeDaEditora;
-
-    @Column(name = "pais")
-    String PaísDaEditora;
-
-    //  relacionando  EDITORA com HQ
-    @OneToMany(mappedBy = "editora")
-    @JsonIgnore
-    private List<ComicModel> revista;
+    private String nome;
+    private String descricao;
 }

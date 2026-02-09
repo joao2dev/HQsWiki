@@ -16,20 +16,8 @@ import java.util.List;
 public class CharacterModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    Long idPersonagem;
+    private Long id;
 
-    @Column(name = "nome")
-    String nomePersonagem;
-
-    @Column(name = "universo")
-    String universoDoPersonagem;
-
-    @Column(name = "poderes")
-    String poderesDoPersonagem;
-
-//  relacionando  PERSONAGEM com HQ
-    @ManyToMany(mappedBy = "personagens")
-    @JsonIgnore
-    private List<ComicModel> revista;
+    private String nome;
+    private String descricao;
 }

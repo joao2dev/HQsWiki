@@ -36,12 +36,12 @@ public class CharacterService {
         Optional<CharacterModel> personagem = characterRepository.findById(id);
 
         if (personagem.isPresent()) {
-            characterModel.setIdPersonagem(id);
+            characterModel.setId(id);
             return characterRepository.save(characterModel);
         }
         return null;
     }
-    public List<CharacterModel> buscarPersonagem(String nome){
+    /*public List<CharacterModel> buscarPersonagem(String nome){
         return characterRepository.findByNomePersonagem(nome);
-    }
+    }*/
 }

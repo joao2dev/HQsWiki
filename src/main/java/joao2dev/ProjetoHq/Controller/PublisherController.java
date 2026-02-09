@@ -37,9 +37,9 @@ public class PublisherController {
         public void deletarById(@PathVariable Long id){
          publisherService.deletarById(id);
     }
-    @GetMapping("/buscar/{nome}")
+ /*   @GetMapping("/buscar/{nome}")
     public List<PublisherModel> buscarEditora(@PathVariable String nome){
         return publisherService.buscarEditora(nome);
-    }
+    }*/
 
 }

@@ -42,8 +42,8 @@ public class CharacterController {
     public void deletarById(@PathVariable Long id) {
         characterService.deletarById(id);
     }
-    @GetMapping("/buscar/{nome}")
+ /*   @GetMapping("/buscar/{nome}")
     public List<CharacterModel> buscarPersonagem(@PathVariable String nome){
         return characterService.buscarPersonagem(nome);
-    }
+    }*/
 }

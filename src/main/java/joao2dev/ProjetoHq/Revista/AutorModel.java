@@ -17,18 +17,9 @@ import java.util.List;
 public class AutorModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    Long idAutor;
+    private Long id;
 
-    @Column(name = "nome")
-    String nomeAutor;
-
-    @Column(name = "nacionalidade")
-    String nacionalidadeAutor;
-
-    //  relacinamento do AUTOR com HQ
-    @ManyToMany(mappedBy = "autores")
-
-    private List<ComicModel> revista = new ArrayList<>();
+    private String nome;
+    private String biografia;
 
 }

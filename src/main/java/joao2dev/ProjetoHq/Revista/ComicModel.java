@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Entity
 @Table(name = "comic")
 @Data
@@ -16,35 +18,29 @@ public class ComicModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "titulo_hq", nullable = false)
     private String tituloHq;
-
-    @Column(name = "ano_de_lancamento_hq")
-    private int anoDeLancamentoHq;
-
-    @Column(name = "edicao_hq")
-    private int edicaoHq;
-
-    @Column(name = "genero_hq")
-    private String generoHq;
-
-    @Column(name = "sinopse_hq", columnDefinition = "TEXT")
-    private String sinopseHq;
-
-    @Column(name = "registro_de_criacao_hq")
-    private String registroDeCriacaoHq;
-
-    // 🔥 AGORA É STRING
-    @Column(name = "nome_editora")
-    private String nomeEditora;
-
-    // 🔥 LISTA SIMPLES EM TEXTO
-    @Column(columnDefinition = "TEXT")
-    private String autores;
-
-    @Column(columnDefinition = "TEXT")
-    private String personagens;
-
-    @Column(name = "img_url")
+    private int anolancamento;
+    private int edicao;
+    private String genero;
+    private String sinopse;
+    private String registrocriacao;
     private String imgUrl;
+
+    @ElementCollection
+    @CollectionTable(
+            name = "COMIC_AUTORES",
+            joinColumns = @JoinColumn(name = "comic_id")
+    )
+    @Column(name = "autor_nome")
+    private List<String> autores;
+
+    @ElementCollection
+    @CollectionTable(
+            name = "COMIC_PERSONAGENS",
+            joinColumns = @JoinColumn(name = "comic_id")
+    )
+    @Column(name = "personagem_nome")
+    private List<String> personagens;
+
+    private String nomeEditora;
 }

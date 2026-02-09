@@ -1,6 +1,5 @@
 package joao2dev.ProjetoHq.Controller;
 
-import joao2dev.ProjetoHq.Revista.ComicModel;
 import joao2dev.ProjetoHq.Services.ComicService;
 import joao2dev.ProjetoHq.dto.ComicRequestDTO;
 import joao2dev.ProjetoHq.dto.ComicResponseDTO;
@@ -40,9 +39,9 @@ public class ComicController {
     ) {
         return comicService.editarComic(id, comicModel);
     }
-    @GetMapping("/buscar/{Titulo}")
-    public List<ComicResponseDTO> buscarComic(String titulo){
-        return comicService.buscarComicPorTitulo(titulo);
+  @GetMapping("/buscar/{tituloHq}")
+    public List<ComicResponseDTO> buscarComic(@PathVariable String tituloHq){
+        return comicService.buscarComicPorTitulo(tituloHq);
     }
     @DeleteMapping("/deletar/{id}")
     public void deletarComic(@PathVariable Long id) {

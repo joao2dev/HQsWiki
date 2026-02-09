@@ -34,11 +34,11 @@ public class PublisherService {
     public PublisherModel editarById(Long id, PublisherModel publisherModel){
         Optional<PublisherModel> editora = publisherRepository.findById(id);
         if (editora.isPresent()){
-            publisherModel.setIdEditora(id);
+            publisherModel.setId(id);
             return publisherRepository.save(publisherModel);
         }return null;
     }
-    public List<PublisherModel> buscarEditora(String nome){
+   /* public List<PublisherModel> buscarEditora(String nome){
         return publisherRepository.findByNomeDaEditora(nome);
-    }
+    }*/
 }

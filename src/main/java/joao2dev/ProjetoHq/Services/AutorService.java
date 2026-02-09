@@ -2,49 +2,51 @@ package joao2dev.ProjetoHq.Services;
 
 import joao2dev.ProjetoHq.Repositorys.AutorRepository;
 import joao2dev.ProjetoHq.Revista.AutorModel;
-import joao2dev.ProjetoHq.Revista.CharacterModel;
+import joao2dev.ProjetoHq.dto.AutorRequestDTO;
+import joao2dev.ProjetoHq.dto.AutorResponseDTO;
+import joao2dev.ProjetoHq.mapstruct.AutorMapper;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 
 import java.util.List;
-import java.util.Optional;
 
+@AllArgsConstructor
 @Service
 public class AutorService {
     private final AutorRepository autorRepository;
+    private final AutorMapper mapper;
 
-    public AutorService(AutorRepository autorRepository) {
-        this.autorRepository = autorRepository;
-    }
 
     //    Criar autor
-    public AutorModel criarAutor(AutorModel autorModel){
-        return autorRepository.save(autorModel);
+    public AutorResponseDTO criarAutor(AutorRequestDTO autorModel){
+        return mapper.paraAutorResponseDTO(autorRepository.save(mapper.paraAutorModel(autorModel)));
 
     }
 //   Listar autores
-    public List<AutorModel> listarAutores(){
-        return autorRepository.findAll();
+    public List<AutorResponseDTO> listarAutores(){
+        return mapper.paraListarAutorResponse(autorRepository.findAll());
     }
 //    listar autor por id
-    public AutorModel listarAutorPorId(Long id){
-        Optional<AutorModel> autor = autorRepository.findById(id);
-        return autor.orElse(null);
+    public AutorResponseDTO listarAutorPorId(Long id){
+        AutorModel autor = autorRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("nao ha autores aqui"));
+        return mapper.paraAutorResponseDTO(autor);
     }
 //  Deletar autor
     public void deletarAutor(Long id){
         autorRepository.deleteById(id);
     }
 //  Editar autor
-    public AutorModel editarAutor(Long id, AutorModel autorModel){
+    public AutorResponseDTO editarAutor(Long id, AutorRequestDTO autorModel){
         if (autorRepository.existsById(id)){
-            autorModel.setIdAutor(id);
-            autorRepository.save(autorModel);
+            autorModel.setId(id);
+            return mapper.paraAutorResponseDTO(autorRepository.save(mapper.paraAutorModel(autorModel)));
         }
             return null;
 
     }
-    public List<AutorModel> buscarAutor(String nome){
-        return autorRepository.findByNomeAutor(nome);
+   public List<AutorResponseDTO> buscarAutor(String nome){
+        return mapper.paraListarAutorResponse(autorRepository.findByNomeIgnoreCase(nome));
     }
 }
