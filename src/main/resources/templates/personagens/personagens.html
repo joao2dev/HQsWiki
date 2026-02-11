@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Personagens</title>
+    <link rel="stylesheet" th:href="@{/css/global.css}">
+    <link rel="stylesheet" th:href="@{/css/personagens.css}">
+</head>
+<body>
+
+<div th:replace="fragments/navbar :: *"></div>
+
+<div class="container">
+    <h1 class="title">Personagens</h1>
+
+    <div class="grid">
+        <div class="card" th:each="p : ${personagens}">
+            <h2 th:text="${p.nome}"></h2>
+            <p><strong>Poder:</strong> <span th:text="${p.poder}"></span></p>
+            <p><strong>Universo:</strong> <span th:text="${p.universo}"></span></p>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

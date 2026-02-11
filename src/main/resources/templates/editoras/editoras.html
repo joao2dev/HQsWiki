@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Editoras</title>
+    <link rel="stylesheet" th:href="@{/css/global.css}">
+    <link rel="stylesheet" th:href="@{/css/editoras.css}">
+</head>
+<body>
+
+<div th:replace="fragments/navbar :: *"></div>
+
+<div class="container">
+    <h1 class="title">Editoras</h1>
+
+    <div class="grid">
+        <div class="card" th:each="e : ${editoras}">
+            <h2 th:text="${e.nome}"></h2>
+            <p><strong>País:</strong> <span th:text="${e.pais}"></span></p>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

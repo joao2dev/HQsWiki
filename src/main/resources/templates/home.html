@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Projeto HQ</title>
+    <link rel="stylesheet" th:href="@{static/css/style.css}">
+</head>
+<body>
+
+<div th:replace="fragments/navbar :: *"></div>
+
+<section class="hero">
+    <h1>Bem-vindo ao Universo das HQs</h1>
+    <p>Gerencie quadrinhos, autores, personagens e editoras</p>
+
+    <div class="cards">
+        <a class="card" th:href="@{/comics}">📕 HQs</a>
+        <a class="card" th:href="@{/autores}">✍️ Autores</a>
+        <a class="card" th:href="@{/personagens}">🦸 Personagens</a>
+        <a class="card" th:href="@{/editoras}">🏢 Editoras</a>
+    </div>
+</section>
+
+</body>
+</html>

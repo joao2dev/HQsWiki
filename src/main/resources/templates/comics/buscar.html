@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Buscar HQ</title>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            background: linear-gradient(135deg, #0f0f0f, #1e1e2f);
+            color: white;
+            font-family: Arial, sans-serif;
+            margin: 0;
+        }
+
+        .navbar {
+            background-color: #111;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .navbar a {
+            color: #00bfff;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: bold;
+        }
+
+        .container {
+            width: 80%;
+            margin: 40px auto;
+        }
+
+        .search-box {
+            background-color: #1f1f2e;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            width: 70%;
+            border-radius: 5px;
+            border: none;
+        }
+
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #00bfff;
+            color: black;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .card {
+            background-color: #2a2a3d;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .not-found {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<div class="navbar">
+    <a th:href="@{/comics}">HQs</a>
+    <a th:href="@{/autores}">Autores</a>
+    <a th:href="@{/personagens}">Personagens</a>
+    <a th:href="@{/editoras}">Editoras</a>
+</div>
+
+<div class="container">
+
+    <h1>Buscar HQ</h1>
+
+    <div class="search-box">
+        <form th:action="@{/comics/buscar}" method="get">
+            <input type="text" name="tituloHq" placeholder="Digite o título da HQ" required>
+            <button type="submit">Buscar</button>
+        </form>
+    </div>
+
+    <!-- Resultado encontrado -->
+    <div th:if="${comic != null}" class="card">
+        <h2 th:text="${comic.titulo}"></h2>
+        <p><strong>Autor:</strong> <span th:text="${comic.autor.nome}"></span></p>
+        <p><strong>Editora:</strong> <span th:text="${comic.editora.nome}"></span></p>
+        <p><strong>Ano:</strong> <span th:text="${comic.anoPublicacao}"></span></p>
+    </div>
+
+    <!-- Caso não encontre -->
+    <div th:if="${comic == null and param.titulo != null}" class="not-found">
+        HQ não encontrada.
+    </div>
+
+</div>
+
+</body>
+</html>
