@@ -95,7 +95,9 @@
         .btn-back {
             background-color: #57606f;
         }
-
+        .btn-edit{
+           background-color:#3498db;
+        }
         .btn-back:hover {
             background-color: #2f3542;
         }
@@ -153,7 +155,7 @@
 
         <div class="buttons">
             <a th:href="@{/comics/ui/listar}" class="btn btn-back">Voltar</a>
-            <a th:href="@{/comics/ui/editar/{id}(id=${comic.id})}" class="btn btn-back">Editar</a>
+            <a th:href="@{/comics/ui/editar/{id}(id=${comic.id})}" class="btn btn-edit">Editar</a>
             <a th:href="@{/comics/ui/deletar/{id}(id=${comic.id})}"
                class="btn btn-delete">Excluir</a>
         </div>

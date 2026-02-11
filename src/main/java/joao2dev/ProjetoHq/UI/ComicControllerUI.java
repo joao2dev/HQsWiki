@@ -43,12 +43,20 @@ public class ComicControllerUI {
         return "redirect:/comics/ui/listar";
     }
 
-    @PutMapping("/editar/{id}")
-    public ComicResponseDTO editarComic(
+    @GetMapping("/editar/{id}")
+    public String editarComic(@PathVariable Long id, Model model){
+        ComicResponseDTO comic = comicService.buscarComicPorId(id);
+        model.addAttribute("comic",comic);
+        return "comics/editarComic";
+    }
+
+    @PostMapping("/editar/{id}")
+    public String editarComic(
             @PathVariable Long id,
-            @RequestBody ComicRequestDTO comicModel
+            @ModelAttribute ComicRequestDTO comicModel
     ) {
-        return comicService.editarComic(id, comicModel);
+         comicService.editarComic(id, comicModel);
+         return "redirect:/comics/ui/listar";
     }
     @GetMapping("/buscar")
     public String buscarComic(@RequestParam String tituloHq, Model model){
@@ -56,8 +64,9 @@ public class ComicControllerUI {
         model.addAttribute("comics",resultado);
         return "comics/listarComics";
     }
-    @DeleteMapping("/deletar/{id}")
-    public void deletarComic(@PathVariable Long id) {
-        comicService.deletarComic(id);
+    @GetMapping("/deletar/{id}")
+    public String deletarComic(@PathVariable Long id) {
+         comicService.deletarComic(id);
+         return  "redirect:/comics/ui/listar";
     }
 }

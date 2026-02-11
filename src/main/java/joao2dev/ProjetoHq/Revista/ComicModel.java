@@ -19,7 +19,7 @@ public class ComicModel {
     private Long id;
 
     private String tituloHq;
-    private int anolancamento;
+    private Integer anolancamento;
     private int edicao;
     private String genero;
     private String sinopse;
