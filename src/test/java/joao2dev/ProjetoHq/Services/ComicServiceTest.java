@@ -10,14 +10,14 @@ import org.junit.jupiter.api.Test;
 import org.mapstruct.factory.Mappers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.mapstruct.factory.Mappers;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -73,5 +73,23 @@ class ComicServiceTest {
 
     @Test
     void editarComic() {
+        List<String> autores = new ArrayList<>();
+        List<String> personagens = new ArrayList<>();
+        autores.add("teste");
+        personagens.add("teste");
+        ComicRequestDTO comic1 = new ComicRequestDTO();
+        comic1.setId(1L);
+        comic1.setTituloHq("teste");
+
+        ComicModel comicExistente = new ComicModel();
+        comicExistente.setId(1L);
+
+        when(comicRepository.findById(1L)).thenReturn(Optional.of(comicExistente));
+        when(comicRepository.save(any())).thenReturn(comicExistente);
+
+        verify(comicRepository,times(1)).findById(1L);
+        verify(comicRepository,times(1)).save(any());
+
+
     }
 }
