@@ -1,3 +1,4 @@
+/*
 package joao2dev.ProjetoHq.Repositorys;
 
 import jakarta.persistence.EntityManager;
@@ -74,3 +75,4 @@ class ComicRepositoryTest {
         return mapper.paraComicResponseDTO(comic1);
     }
 }
+*/

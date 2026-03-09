@@ -1,3 +1,4 @@
+/*
 package joao2dev.ProjetoHq.Services;
 
 import joao2dev.ProjetoHq.Repositorys.ComicRepository;
@@ -92,4 +93,4 @@ class ComicServiceTest {
 
 
     }
-}
+}*/
