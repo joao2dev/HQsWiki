@@ -5,9 +5,12 @@ import joao2dev.ProjetoHq.dto.UserRequestDTO;
 import joao2dev.ProjetoHq.dto.UserResponseDTO;
 import lombok.experimental.UtilityClass;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface UserMapper {
     UserModel paraUserModel(UserRequestDTO request);
-    UserResponseDTO paraUserResponse(UserModel model);
+    @Mapping(target = "token", source = "token")
+    UserResponseDTO paraUserResponse(UserModel model,String token);
+
 }
