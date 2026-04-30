@@ -1,140 +1,136 @@
 # HQsWiki
 
-Sistema web completo para gerenciamento de Histórias em Quadrinhos (HQs), desenvolvido com Spring Boot seguindo arquitetura em camadas e boas práticas de desenvolvimento backend.
+Sistema backend completo para gerenciamento de Histórias em Quadrinhos (HQs), desenvolvido com Spring Boot seguindo arquitetura em camadas e boas práticas de desenvolvimento profissional.
 
-A aplicação permite cadastrar, consultar, atualizar e remover HQs, incluindo múltiplos autores e personagens, além de disponibilizar interface web com Thymeleaf.
-
----
-
-## Tecnologias Utilizadas
-
-* Java 17+
-* Spring Boot
-* Spring Data JPA
-* Hibernate
-* H2 Database
-* MapStruct
-* Maven
-* Thymeleaf
-* Git / GitHub
+A aplicação fornece uma API REST segura com autenticação baseada em JWT, permitindo o gerenciamento completo de HQs, autores e personagens.
 
 ---
 
-## Funcionalidades
+## 🚀 Tecnologias Utilizadas
 
-* Cadastro de HQ
-* Listagem de HQs
-* Busca por ID
-* Busca por título
-* Atualização de dados
-* Remoção de HQ
-* Cadastro de múltiplos autores
-* Cadastro de múltiplos personagens
-* Interface web com Thymeleaf
-* Uso de DTOs (RequestDTO e ResponseDTO)
-* Conversão automática com MapStruct
-
----
-
-## Arquitetura
-
-O projeto segue arquitetura em camadas visando separação de responsabilidades:
-
-* Controller — Responsável pelas requisições HTTP
-* Service — Regras de negócio
-* Repository — Persistência de dados
-* Model (Entity) — Representação das tabelas
-* DTOs — Transferência de dados
-* Mapper — Conversão entre entidades e DTOs
-
-Essa organização facilita manutenção, escalabilidade e testes.
+- Java 17+
+- Spring Boot  
+- Spring Security  
+- PostgreSQL  
+- Spring Data JPA  
+- Hibernate  
+- MapStruct  
+- Maven  
+- Thymeleaf  
+- JUnit  
+- Git / GitHub  
 
 ---
 
-## Estrutura do Projeto
+## 🔐 Autenticação e Segurança
 
-src/main/java
-├── controller
-├── service
-├── repository
-├── model
-├── dto
-└── mapper
-
-src/main/resources
-├── templates
-├── static
-└── application.properties
+- Autenticação com JWT (JSON Web Token)
+- Geração de token no login
+- Proteção de rotas com Spring Security  
+- Controle de acesso baseado em autenticação
+- Sessão stateless
 
 ---
 
-## Configuração de Variáveis de Ambiente
+## ⚙️ Funcionalidades
 
-O projeto utiliza variáveis de ambiente para configuração do banco de dados.
-
-Crie um arquivo `.env` na raiz do projeto:
-
-DB_URL=jdbc:h2:mem:testdb
-DB_USERNAME=sa
-DB_PASSWORD=
-
-No arquivo application.properties:
-
-spring.datasource.url=${DB_URL}
-spring.datasource.username=${DB_USERNAME}
-spring.datasource.password=${DB_PASSWORD}
-
-spring.jpa.hibernate.ddl-auto=update
-
-spring.h2.console.enabled=true
-spring.h2.console.path=/h2-console
+- CRUD completo de HQs  
+- Cadastro de múltiplos autores e personagens  
+- Busca por ID e título  
+- Validação de dados  
+- Tratamento de erros com respostas padronizadas  
+- Uso de DTOs (RequestDTO e ResponseDTO)  
+- Conversão automática com MapStruct  
+- Interface web com Thymeleaf  
 
 ---
 
-## Executando Localmente
+## 📡 Endpoints REST
 
-1. Configure o arquivo `.env`
+### Autenticação
+
+POST /auth/login
+
+### HQs
+
+POST   /comics  
+GET    /comics  
+GET    /comics/{id}  
+PUT    /comics/{id}  
+DELETE /comics/{id}  
+
+---
+
+## 🔄 Exemplo de Autenticação
+
+1. Faça login:
+
+POST /auth/login
+
+2. Receba o token JWT
+
+3. Use nas requisições:
+
+Authorization: Bearer SEU_TOKEN_AQUI
+
+---
+
+## 🧪 Testes
+
+- Testes automatizados com JUnit  
+- Cobertura de regras de negócio  
+- Validação de comportamentos críticos da aplicação  
+
+---
+
+## 🏗️ Arquitetura
+
+O projeto segue arquitetura em camadas:
+
+- Controller → Requisições HTTP  
+- Service → Regras de negócio  
+- Repository → Persistência  
+- Model → Entidades  
+- DTO → Transferência de dados  
+- Mapper → Conversão  
+
+---
+
+## ⚙️ Executando o Projeto
+
+1. Configure as variáveis de ambiente (.env)
+
+Exemplo:
+
+DB_URL=jdbc:postgresql://localhost:5432/hqswiki  
+DB_USERNAME=seu_usuario  
+DB_PASSWORD=sua_senha  
+
 2. Execute:
 
 mvn spring-boot:run
 
-A aplicação ficará disponível em:
+3. Acesse:
 
 http://localhost:8080
 
-Console H2:
+---
 
-http://localhost:8080/h2-console
+## 📌 Diferenciais do Projeto
+
+- Implementação completa de autenticação JWT  
+- Estrutura profissional em camadas  
+- Código limpo e organizado  
+- Uso de boas práticas de backend  
+- Integração com PostgreSQL  
 
 ---
 
-## Endpoints REST
+## 👨‍💻 Autor
 
-POST   /comics
-GET    /comics
-GET    /comics/{id}
-PUT    /comics/{id}
-DELETE /comics/{id}
+João Guilherme  
+Backend Developer (Java)
 
 ---
 
-## Melhorias Futuras
-
-* Spring Security
-* Autenticação e autorização
-* Dockerização
-* Integração com MySQL em produção
-* Documentação com Swagger/OpenAPI
-* Testes automatizados
-
----
-
-## Autor
-
-João Guilherme
-Estudante de Desenvolvimento de Sistemas
-Experiência com Java, Web e APIs REST
-
----
-
-Projeto desenvolvido para fins educacionais e portfólio.
+Projeto desenvolvido para portfólio.
