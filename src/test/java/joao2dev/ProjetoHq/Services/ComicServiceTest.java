@@ -1,4 +1,4 @@
-/*
+
 package joao2dev.ProjetoHq.Services;
 
 import joao2dev.ProjetoHq.Repositorys.ComicRepository;
@@ -76,21 +76,47 @@ class ComicServiceTest {
     void editarComic() {
         List<String> autores = new ArrayList<>();
         List<String> personagens = new ArrayList<>();
+
         autores.add("teste");
         personagens.add("teste");
+
         ComicRequestDTO comic1 = new ComicRequestDTO();
         comic1.setId(1L);
         comic1.setTituloHq("teste");
+        comic1.setAnolancamento(2000);
+        comic1.setEdicao(1);
+        comic1.setGenero("teste");
+        comic1.setSinopse("teste");
+        comic1.setRegistrocriacao("#1231");
+        comic1.setImgUrl("teste");
+        comic1.setAutores(autores);
+        comic1.setPersonagens(personagens);
+        comic1.setNomeEditora("teste");
 
         ComicModel comicExistente = new ComicModel();
         comicExistente.setId(1L);
+        comicExistente.setTituloHq("teste");
+        comicExistente.setAnolancamento(2000);
+        comicExistente.setEdicao(1);
+        comicExistente.setGenero("teste");
+        comicExistente.setSinopse("teste");
+        comicExistente.setRegistrocriacao("#1231");
+        comicExistente.setImgUrl("teste");
+        comicExistente.setAutores(autores);
+        comicExistente.setPersonagens(personagens);
+        comicExistente.setNomeEditora("teste");
+
+
 
         when(comicRepository.findById(1L)).thenReturn(Optional.of(comicExistente));
         when(comicRepository.save(any())).thenReturn(comicExistente);
+
+        comicService.editarComic(comic1.getId(),comic1);
 
         verify(comicRepository,times(1)).findById(1L);
         verify(comicRepository,times(1)).save(any());
 
 
     }
-}*/
+//    TODO: verificar se o sistema busca a revista pelo id
+}
