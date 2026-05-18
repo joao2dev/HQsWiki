@@ -9,6 +9,7 @@ import joao2dev.ProjetoHq.mapstruct.ComicMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mapstruct.factory.Mappers;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -41,6 +42,7 @@ class ComicServiceTest {
 
     private ComicModel comicModel;
     private ComicRequestDTO comic;
+    private ComicRequestDTO comicEditado;
 
     private List<String> autores;
     private List<String> personagens;
@@ -56,6 +58,7 @@ class ComicServiceTest {
 
         comicModel = new ComicModel();
         comic = new ComicRequestDTO();
+        comicEditado = new ComicRequestDTO();
 
         comic.setId(1L);
         comic.setTituloHq("teste");
@@ -68,6 +71,19 @@ class ComicServiceTest {
         comic.setAutores(autores);
         comic.setPersonagens(personagens);
         comic.setNomeEditora("teste");
+
+        comicEditado.setId(1L);
+        comicEditado.setTituloHq("editado");
+        comicEditado.setAnolancamento(2000);
+        comicEditado.setEdicao(1);
+        comicEditado.setGenero("teste");
+        comicEditado.setSinopse("teste");
+        comicEditado.setRegistrocriacao("#1231");
+        comicEditado.setImgUrl("teste");
+        comicEditado.setAutores(autores);
+        comicEditado.setPersonagens(personagens);
+        comicEditado.setNomeEditora("teste");
+
 
         comicModel.setId(1L);
         comicModel.setTituloHq("teste");
@@ -88,7 +104,16 @@ class ComicServiceTest {
         when(comicRepository.save(any(ComicModel.class)))
                 .thenReturn(comicModel);
 
+
         ComicResponseDTO resultado = comicService.criarComic(comic);
+
+        ArgumentCaptor<ComicModel> argument = ArgumentCaptor.forClass(ComicModel.class);
+
+        verify(comicRepository).save(argument.capture());
+
+
+        ComicModel comicCriado = argument.getValue();
+        assertEquals("teste",comicCriado.getTituloHq());
 
         verify(comicRepository, times(1))
                 .save(any(ComicModel.class));
@@ -105,7 +130,14 @@ class ComicServiceTest {
         when(comicRepository.save(any(ComicModel.class)))
                 .thenReturn(comicModel);
 
-        comicService.editarComic(1L, comic);
+        comicService.editarComic(1L, comicEditado);
+
+        ArgumentCaptor<ComicModel> argumento = ArgumentCaptor.forClass(ComicModel.class);
+
+        verify(comicRepository).save(argumento.capture());
+
+        ComicModel comicSalvo = argumento.getValue();
+        assertEquals("editado",comicSalvo.getTituloHq());
 
         verify(comicRepository, times(1))
                 .findById(1L);
