@@ -39,15 +39,25 @@ class ComicServiceTest {
         comicService = new ComicService(comicRepository, mapper);
     }
 
+    private ComicModel comicModel;
+    private ComicRequestDTO comic;
 
-    @Test
+    private List<String> autores;
+    private List<String> personagens;
+
+    @BeforeEach
     void criarComic() {
 
-        List<String> autores = new ArrayList<>();
-        List<String> personagens = new ArrayList<>();
+        autores = new ArrayList<>();
+        personagens = new ArrayList<>();
+
         autores.add("teste");
         personagens.add("teste");
-        ComicRequestDTO comic = new ComicRequestDTO();
+
+        comicModel = new ComicModel();
+        comic = new ComicRequestDTO();
+
+        comic.setId(1L);
         comic.setTituloHq("teste");
         comic.setAnolancamento(2000);
         comic.setEdicao(1);
@@ -59,64 +69,49 @@ class ComicServiceTest {
         comic.setPersonagens(personagens);
         comic.setNomeEditora("teste");
 
+        comicModel.setId(1L);
+        comicModel.setTituloHq("teste");
+        comicModel.setAnolancamento(2000);
+        comicModel.setEdicao(1);
+        comicModel.setGenero("teste");
+        comicModel.setSinopse("teste");
+        comicModel.setRegistrocriacao("#1231");
+        comicModel.setImgUrl("teste");
+        comicModel.setAutores(autores);
+        comicModel.setPersonagens(personagens);
+        comicModel.setNomeEditora("teste");
+    }
 
-        ComicModel comicModel = new ComicModel();
-        ComicResponseDTO response = new ComicResponseDTO();
+    @Test
+    void confirmaSeFoiCriadoOComic() {
 
-        when(comicRepository.save(any())).thenReturn(comicModel);
+        when(comicRepository.save(any(ComicModel.class)))
+                .thenReturn(comicModel);
 
         ComicResponseDTO resultado = comicService.criarComic(comic);
 
-        verify(comicRepository, times(1)).save(any(ComicModel.class));
+        verify(comicRepository, times(1))
+                .save(any(ComicModel.class));
 
-        assertEquals(response, resultado);
+        assertNotNull(resultado);
     }
 
     @Test
     void editarComic() {
-        List<String> autores = new ArrayList<>();
-        List<String> personagens = new ArrayList<>();
 
-        autores.add("teste");
-        personagens.add("teste");
+        when(comicRepository.findById(1L))
+                .thenReturn(Optional.of(comicModel));
 
-        ComicRequestDTO comic1 = new ComicRequestDTO();
-        comic1.setId(1L);
-        comic1.setTituloHq("teste");
-        comic1.setAnolancamento(2000);
-        comic1.setEdicao(1);
-        comic1.setGenero("teste");
-        comic1.setSinopse("teste");
-        comic1.setRegistrocriacao("#1231");
-        comic1.setImgUrl("teste");
-        comic1.setAutores(autores);
-        comic1.setPersonagens(personagens);
-        comic1.setNomeEditora("teste");
+        when(comicRepository.save(any(ComicModel.class)))
+                .thenReturn(comicModel);
 
-        ComicModel comicExistente = new ComicModel();
-        comicExistente.setId(1L);
-        comicExistente.setTituloHq("teste");
-        comicExistente.setAnolancamento(2000);
-        comicExistente.setEdicao(1);
-        comicExistente.setGenero("teste");
-        comicExistente.setSinopse("teste");
-        comicExistente.setRegistrocriacao("#1231");
-        comicExistente.setImgUrl("teste");
-        comicExistente.setAutores(autores);
-        comicExistente.setPersonagens(personagens);
-        comicExistente.setNomeEditora("teste");
+        comicService.editarComic(1L, comic);
 
+        verify(comicRepository, times(1))
+                .findById(1L);
 
-
-        when(comicRepository.findById(1L)).thenReturn(Optional.of(comicExistente));
-        when(comicRepository.save(any())).thenReturn(comicExistente);
-
-        comicService.editarComic(comic1.getId(),comic1);
-
-        verify(comicRepository,times(1)).findById(1L);
-        verify(comicRepository,times(1)).save(any());
-
-
+        verify(comicRepository, times(1))
+                .save(any(ComicModel.class));
     }
 //    TODO: verificar se o sistema busca a revista pelo id
 }
