@@ -19,7 +19,7 @@ public class ComicControllerUI {
     private ComicService comicService;
 
 
-    @GetMapping("/listar/")
+    @GetMapping("/listar")
     public String listarComics(Model model) {
         List<ComicResponseDTO> comics = comicService.listarComics();
         model.addAttribute("comics", comics);
