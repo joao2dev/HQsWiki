@@ -2,6 +2,7 @@ package joao2dev.ProjetoHq.UI;
 
 import joao2dev.ProjetoHq.Revista.ComicModel;
 import joao2dev.ProjetoHq.Services.ComicService;
+import joao2dev.ProjetoHq.config.TokenService;
 import joao2dev.ProjetoHq.dto.ComicRequestDTO;
 import joao2dev.ProjetoHq.dto.ComicResponseDTO;
 import lombok.AllArgsConstructor;
@@ -17,7 +18,8 @@ import java.util.List;
 public class ComicControllerUI {
     private ComicService comicService;
 
-    @GetMapping("/listar")
+
+    @GetMapping("/listar/")
     public String listarComics(Model model) {
         List<ComicResponseDTO> comics = comicService.listarComics();
         model.addAttribute("comics", comics);

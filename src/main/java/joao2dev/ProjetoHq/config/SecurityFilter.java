@@ -4,6 +4,7 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -26,31 +27,44 @@ import java.util.Optional;
 
 @Component
 @AllArgsConstructor
-
 public class SecurityFilter extends OncePerRequestFilter {
 
     private final TokenService tokenService;
 
     @Override
-    public void doFilterInternal(HttpServletRequest request , HttpServletResponse response,FilterChain filterChain) throws ServletException, IOException{
-        String authorizationHeader = request.getHeader("Authorization");
+    public void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
+                                 FilterChain filterChain) throws ServletException, IOException {
 
-        if(StringUtils.hasText(authorizationHeader) && authorizationHeader.startsWith("Bearer ")){
-            String token = authorizationHeader.substring("Bearer ".length());
+        String token = extrairTokenDoCookie(request); // ✅ tenta cookie primeiro
 
-            Optional<JWTUserData> optionalJWTUserData = tokenService.verifyToken(token);
-            if (optionalJWTUserData.isPresent()){
-                JWTUserData userData = optionalJWTUserData.get();
-
-                UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userData,null, List.of());
-                SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-
+        if (token == null) {
+            // ✅ fallback para header Authorization (Postman, APIs externas)
+            String authHeader = request.getHeader("Authorization");
+            if (StringUtils.hasText(authHeader) && authHeader.startsWith("Bearer ")) {
+                token = authHeader.substring(7);
             }
-            filterChain.doFilter(request,response);
-        }
-        else {
-            filterChain.doFilter(request,response);
         }
 
+        if (token != null) {
+            Optional<JWTUserData> optionalUserData = tokenService.verifyToken(token);
+            if (optionalUserData.isPresent()) {
+                JWTUserData userData = optionalUserData.get();
+                UsernamePasswordAuthenticationToken authToken =
+                        new UsernamePasswordAuthenticationToken(userData, null, List.of());
+                SecurityContextHolder.getContext().setAuthentication(authToken);
+            }
+        }
+
+        filterChain.doFilter(request, response); // ✅ sempre continua a cadeia
+    }
+
+    private String extrairTokenDoCookie(HttpServletRequest request) {
+        if (request.getCookies() == null) return null;
+        for (Cookie cookie : request.getCookies()) {
+            if ("jwt".equals(cookie.getName())) {
+                return cookie.getValue();
+            }
+        }
+        return null;
     }
 }
