@@ -43,7 +43,7 @@ public class UserController {
         cookie.setMaxAge(8 * 60 * 60);
         response.addCookie(cookie);
 
-        return "redirect:/comics/ui/listar/";
+        return "redirect:/comics/ui/listar";
     }
     @GetMapping("/logout")
     public String logout(HttpServletResponse response) {
