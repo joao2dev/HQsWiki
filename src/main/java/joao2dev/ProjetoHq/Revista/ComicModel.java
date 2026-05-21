@@ -1,6 +1,7 @@
 package joao2dev.ProjetoHq.Revista;
 
 import jakarta.persistence.*;
+import joao2dev.ProjetoHq.Usuario.UserModel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -43,4 +44,7 @@ public class ComicModel {
     private List<String> personagens;
 
     private String nomeEditora;
+    @ManyToOne
+    @JoinColumn(name = "usuario_id")
+    private UserModel usuario;
 }

@@ -3,10 +3,15 @@ package joao2dev.ProjetoHq.Services;
 import jakarta.transaction.Transactional;
 import joao2dev.ProjetoHq.Repositorys.ComicRepository;
 import joao2dev.ProjetoHq.Revista.ComicModel;
+import joao2dev.ProjetoHq.Usuario.UserModel;
+import joao2dev.ProjetoHq.Usuario.UserRepository;
+import joao2dev.ProjetoHq.config.JWTUserData;
 import joao2dev.ProjetoHq.dto.ComicRequestDTO;
 import joao2dev.ProjetoHq.dto.ComicResponseDTO;
 import joao2dev.ProjetoHq.mapstruct.ComicMapper;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,22 +22,34 @@ public class ComicService {
 
     private final ComicRepository comicRepository;
     private final ComicMapper mapper;
+    private UserRepository userRepository;
 
 
 
     // 📌 Criar HQ
     @Transactional
     public ComicResponseDTO criarComic(ComicRequestDTO dto) {
-
+        JWTUserData userData = (JWTUserData) SecurityContextHolder.getContext()
+                .getAuthentication()
+                .getPrincipal();
+        UserModel usuario = userRepository.findByEmail(userData.email());
         ComicModel comicModel = mapper.paraComicModel(dto);
         ComicModel salvo = comicRepository.save(comicModel);
         validarComic(comicModel);
+        comicModel.setUsuario(usuario);
         return mapper.paraComicResponseDTO(salvo);
     }
 
     // 📌 Listar HQs
     public List<ComicResponseDTO> listarComics() {
-        return mapper.paraListaComicResponse(comicRepository.findAll());
+        JWTUserData userData = (JWTUserData) SecurityContextHolder.getContext()
+                .getAuthentication()
+                .getPrincipal();
+        UserModel usuario = userRepository.findByEmail(userData.email());
+        return comicRepository.findByUsuario(usuario)
+                .stream()
+                .map(mapper::paraComicResponseDTO)
+                .toList();
     }
 
     // 📌 Buscar por ID

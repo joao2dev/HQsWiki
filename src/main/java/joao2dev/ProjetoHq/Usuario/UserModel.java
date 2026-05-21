@@ -1,7 +1,8 @@
 package joao2dev.ProjetoHq.Usuario;
 
 import jakarta.persistence.*;
-import jdk.jfr.DataAmount;
+
+import joao2dev.ProjetoHq.Revista.ComicModel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -31,6 +32,9 @@ public class UserModel implements UserDetails {
 
     @Column(nullable = false)
     private String password;
+
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
+    private List<ComicModel> comics;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
