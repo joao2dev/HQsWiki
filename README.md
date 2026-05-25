@@ -1,136 +1,119 @@
 # HQsWiki
 
-Sistema backend completo para gerenciamento de Histórias em Quadrinhos (HQs), desenvolvido com Spring Boot seguindo arquitetura em camadas e boas práticas de desenvolvimento profissional.
-
-A aplicação fornece uma API REST segura com autenticação baseada em JWT, permitindo o gerenciamento completo de HQs, autores e personagens.
+Sistema de gerenciamento de Histórias em Quadrinhos com biblioteca pessoal por usuário, desenvolvido com Spring Boot com interface web via Thymeleaf e autenticação JWT.
 
 ---
 
-## 🚀 Tecnologias Utilizadas
+## Tecnologias
 
 - Java 17+
-- Spring Boot  
-- Spring Security  
-- PostgreSQL  
-- Spring Data JPA  
-- Hibernate  
-- MapStruct  
-- Maven  
-- Thymeleaf  
-- JUnit  
-- Git / GitHub  
+- Spring Boot
+- Spring Security
+- PostgreSQL
+- Spring Data JPA / Hibernate
+- Flyway
+- MapStruct
+- Thymeleaf
+- JUnit
+- Maven
+- Git / GitHub
 
 ---
 
-## 🔐 Autenticação e Segurança
+## Funcionalidades
 
-- Autenticação com JWT (JSON Web Token)
-- Geração de token no login
-- Proteção de rotas com Spring Security  
-- Controle de acesso baseado em autenticação
+- Cadastro e autenticação de usuários
+- Autenticação com JWT armazenado em cookie HttpOnly
+- Biblioteca pessoal — cada usuário gerencia suas próprias HQs
+- CRUD completo de HQs
+- Busca parcial por título
+- Cadastro de múltiplos autores e personagens
+- Validação de dados
+- DTOs com conversão automática via MapStruct
+- Versionamento de banco de dados com Flyway
+
+---
+
+## Segurança
+
+- Autenticação com JWT via cookie HttpOnly
 - Sessão stateless
+- Rotas protegidas com Spring Security
+- Usuário só acessa, edita e deleta suas próprias HQs
 
 ---
 
-## ⚙️ Funcionalidades
-
-- CRUD completo de HQs  
-- Cadastro de múltiplos autores e personagens  
-- Busca por ID e título  
-- Validação de dados  
-- Tratamento de erros com respostas padronizadas  
-- Uso de DTOs (RequestDTO e ResponseDTO)  
-- Conversão automática com MapStruct  
-- Interface web com Thymeleaf  
-
----
-
-## 📡 Endpoints REST
+## Endpoints REST
 
 ### Autenticação
-
+```
+POST /auth/registrar
 POST /auth/login
+GET  /auth/logout
+```
 
 ### HQs
+```
+GET    /comics
+GET    /comics/{id}
+POST   /comics
+PUT    /comics/{id}
+DELETE /comics/{id}
+```
 
-POST   /comics  
-GET    /comics  
-GET    /comics/{id}  
-PUT    /comics/{id}  
-DELETE /comics/{id}  
-
----
-
-## 🔄 Exemplo de Autenticação
-
-1. Faça login:
-
-POST /auth/login
-
-2. Receba o token JWT
-
-3. Use nas requisições:
-
-Authorization: Bearer SEU_TOKEN_AQUI
-
----
-
-## 🧪 Testes
-
-- Testes automatizados com JUnit  
-- Cobertura de regras de negócio  
-- Validação de comportamentos críticos da aplicação  
+### Interface Web
+```
+GET  /auth/ui/login
+GET  /auth/ui/registrar
+GET  /comics/ui/listar
+GET  /comics/ui/adicionar
+GET  /comics/ui/editar/{id}
+GET  /comics/ui/detalhes/{id}
+GET  /comics/ui/buscar?tituloHq=
+GET  /comics/ui/deletar/{id}
+```
 
 ---
 
-## 🏗️ Arquitetura
+## Executando o projeto
 
-O projeto segue arquitetura em camadas:
+1. Configure as variáveis de ambiente:
 
-- Controller → Requisições HTTP  
-- Service → Regras de negócio  
-- Repository → Persistência  
-- Model → Entidades  
-- DTO → Transferência de dados  
-- Mapper → Conversão  
-
----
-
-## ⚙️ Executando o Projeto
-
-1. Configure as variáveis de ambiente (.env)
-
-Exemplo:
-
-DB_URL=jdbc:postgresql://localhost:5432/hqswiki  
-DB_USERNAME=seu_usuario  
-DB_PASSWORD=sua_senha  
+```
+DB_URL=jdbc:postgresql://localhost:5432/hqswiki
+DB_USERNAME=seu_usuario
+DB_PASSWORD=sua_senha
+```
 
 2. Execute:
 
+```
 mvn spring-boot:run
+```
 
 3. Acesse:
 
-http://localhost:8080
+```
+http://localhost:8080/auth/ui/login
+```
 
 ---
 
-## 📌 Diferenciais do Projeto
+## Arquitetura
 
-- Implementação completa de autenticação JWT  
-- Estrutura profissional em camadas  
-- Código limpo e organizado  
-- Uso de boas práticas de backend  
-- Integração com PostgreSQL  
-
----
-
-## 👨‍💻 Autor
-
-João Guilherme  
-Backend Developer (Java)
+```
+Controller  →  requisições HTTP
+Service     →  regras de negócio
+Repository  →  persistência
+Model       →  entidades JPA
+DTO         →  transferência de dados
+Mapper      →  conversão via MapStruct
+```
 
 ---
+
+## Autor
+
+João Guilherme — Backend Developer (Java)
 
 Projeto desenvolvido para portfólio.
