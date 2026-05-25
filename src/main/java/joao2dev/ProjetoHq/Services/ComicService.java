@@ -26,7 +26,7 @@ public class ComicService {
 
 
 
-    // 📌 Criar HQ
+
     @Transactional
     public ComicResponseDTO criarComic(ComicRequestDTO dto) {
         JWTUserData userData = (JWTUserData) SecurityContextHolder.getContext()
@@ -40,7 +40,7 @@ public class ComicService {
         return mapper.paraComicResponseDTO(salvo);
     }
 
-    // 📌 Listar HQs
+
     public List<ComicResponseDTO> listarComics() {
         JWTUserData userData = (JWTUserData) SecurityContextHolder.getContext()
                 .getAuthentication()
@@ -52,7 +52,7 @@ public class ComicService {
                 .toList();
     }
 
-    // 📌 Buscar por ID
+
     public ComicResponseDTO buscarComicPorId(Long id) {
         ComicModel comic = comicRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("HQ não encontrada"));
@@ -60,23 +60,37 @@ public class ComicService {
         return mapper.paraComicResponseDTO(comic);
     }
 
-    // 📌 Buscar por título
+
     public List<ComicResponseDTO> buscarComicPorTitulo(String tituloHq) {
+        JWTUserData userData = (JWTUserData) SecurityContextHolder.getContext()
+                .getAuthentication()
+                .getPrincipal();
+        UserModel usuario = userRepository.findByEmail(userData.email());
+
         return mapper.paraListaComicResponse(
-                comicRepository.findByTituloHqIgnoreCase(tituloHq)
+                comicRepository.findByTituloHqContainingIgnoreCaseAndUsuario(tituloHq, usuario)
+
         );
     }
 
-    // 📌 Editar HQ
+
     @Transactional
     public ComicResponseDTO editarComic(Long id, ComicRequestDTO dto) {
 
-        comicRepository.findById(id)
+        JWTUserData userData = (JWTUserData) SecurityContextHolder.getContext()
+                .getAuthentication()
+                .getPrincipal();
+        ComicModel comicExistente = comicRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("HQ não encontrada"));
 
+
+        UserModel usuario = userRepository.findByEmail(userData.email());
+        if (!comicExistente.getUsuario().getId().equals(usuario.getId())){
+            throw new RuntimeException("Você não tem permissão para editar essa HQ.");
+        }
         ComicModel comicModel = mapper.paraComicModel(dto);
         comicModel.setId(id);
-
+        comicModel.setUsuario(usuario);
         validarComic(comicModel);
 
 
@@ -85,8 +99,19 @@ public class ComicService {
         );
     }
 
-    // 📌 Deletar HQ
+
     public void deletarComic(Long id) {
+        JWTUserData userData = (JWTUserData) SecurityContextHolder.getContext()
+                .getAuthentication()
+                .getPrincipal();
+
+        UserModel usuario = userRepository.findByEmail(userData.email());
+        ComicModel comic = comicRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("HQ não encontrada"));
+
+        if (!comic.getUsuario().getId().equals(usuario.getId())) {
+            throw new RuntimeException("Você não tem permissão para deletar essa HQ.");
+        }
         comicRepository.deleteById(id);
     }
 
