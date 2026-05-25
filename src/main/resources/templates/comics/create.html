@@ -88,7 +88,7 @@
     <h2 class="page-title">Cadastrar Nova HQ</h2>
 
     <form th:action="@{/comics/ui/adicionar}" th:object="${comic}"  method="post" class="form">
-
+        <input th:field="*{edicao}" placeholder="edição">
         <input th:field="*{tituloHq}" placeholder="Título da HQ" required>
         <input th:field="*{genero}" placeholder="Gênero" required>
         <input th:field="*{anolancamento}" type="number" placeholder="Ano">
