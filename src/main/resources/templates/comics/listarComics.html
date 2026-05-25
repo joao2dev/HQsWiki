@@ -141,12 +141,25 @@
  .floating-btn:hover {
      transform: scale(1.1);
  }
+#btn-sair {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 14px;
+    text-decoration: none;
+}
 
+#btn-sair:hover {
+    background-color: #c0392b;
+}
     </style>
 </head>
 
 <body>
-<a th:href="@{/auth/logout}">Sair</a>
+<a id="btn-sair" th:href="@{/auth/logout}">Sair</a>
 <h2 class="page-title">HQs Cadastradas</h2>
 <div class="search-container">
 <form th:action="@{/comics/ui/buscar}" method="get">
