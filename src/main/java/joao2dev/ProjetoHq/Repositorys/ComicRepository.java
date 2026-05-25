@@ -9,6 +9,6 @@ import java.util.Optional;
 
 public interface ComicRepository extends JpaRepository<ComicModel , Long> {
 
-   List<ComicModel> findByTituloHqContainingIgnoreCase(String tituloHq);
+   List<ComicModel> findByTituloHqContainingIgnoreCaseAndUsuario(String tituloHq, UserModel usuario);
    List<ComicModel> findByUsuario(UserModel usuario);
 }
