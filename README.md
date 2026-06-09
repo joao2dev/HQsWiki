@@ -1,7 +1,66 @@
 # HQsWiki
 
 Sistema de gerenciamento de Histórias em Quadrinhos com biblioteca pessoal por usuário, desenvolvido com Spring Boot com interface web via Thymeleaf e autenticação JWT.
-##video demostração:[[https://youtu.be/-tvF9aUgoys](https://youtu.be/Fr5Gl7e5l10)](https://youtu.be/Fr5Gl7e5l10)
+
+## Vídeo demonstração
+[![Assistir no YouTube](https://img.shields.io/badge/YouTube-Assistir%20Demo-red?logo=youtube)](https://youtu.be/Fr5Gl7e5l10)
+
+---
+
+## Docker
+
+Imagem disponível no Docker Hub:
+
+```bash
+docker pull joao2dev/hqswiki
+```
+
+[![Docker Hub](https://img.shields.io/docker/pulls/joao2dev/hqswiki?logo=docker)](https://hub.docker.com/r/joao2dev/hqswiki)
+
+### Rodando com Docker Compose
+
+Crie um arquivo `.env` na raiz do projeto:
+
+```env
+DATABASE_URL=jdbc:postgresql://db:5432/projetohq
+DATABASE_USERNAME=seu_usuario
+DATABASE_PASSWORD=sua_senha
+KEY=sua_chave_secreta
+```
+
+Crie o `docker-compose.yml`:
+
+```yaml
+services:
+  db:
+    image: postgres:16
+    container_name: hqswiki-db
+    environment:
+      POSTGRES_DB: projetohq
+      POSTGRES_USER: seu_usuario
+      POSTGRES_PASSWORD: sua_senha
+    ports:
+      - "5432:5432"
+
+  app:
+    image: joao2dev/hqswiki
+    container_name: hqswiki-app
+    ports:
+      - "8080:8080"
+    env_file:
+      - .env
+    depends_on:
+      - db
+```
+
+Suba os containers:
+
+```bash
+docker compose up
+```
+
+Acesse: [http://localhost:8080/auth/ui/login](http://localhost:8080/auth/ui/login)
+
 ---
 
 ## Tecnologias
@@ -17,6 +76,7 @@ Sistema de gerenciamento de Histórias em Quadrinhos com biblioteca pessoal por 
 - JUnit
 - Maven
 - Git / GitHub
+- Docker
 
 ---
 
@@ -75,19 +135,20 @@ GET  /comics/ui/deletar/{id}
 
 ---
 
-## Executando o projeto
+## Executando sem Docker
 
 1. Configure as variáveis de ambiente:
 
-```
-DB_URL=jdbc:postgresql://localhost:5432/hqswiki
-DB_USERNAME=seu_usuario
-DB_PASSWORD=sua_senha
+```env
+DATABASE_URL=jdbc:postgresql://localhost:5432/projetohq
+DATABASE_USERNAME=seu_usuario
+DATABASE_PASSWORD=sua_senha
+KEY=sua_chave_secreta
 ```
 
 2. Execute:
 
-```
+```bash
 mvn spring-boot:run
 ```
 
