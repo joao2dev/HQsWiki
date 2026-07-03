@@ -1,5 +1,15 @@
-FROM eclipse-temurin:25
-LABEL maintainer="joao2dev"
-WORKDIR /projetohq
-COPY target/demo-0.0.1-SNAPSHOT.jar /projetohq/hqswiki.jar
-ENTRYPOINT ["java", "-jar", "hqswiki.jar"]
+FROM maven:3.9.6-eclipse-temurin-17 AS build
+
+WORKDIR /app
+
+COPY . .
+
+RUN mvn clean package -DskipTests
+
+FROM eclipse-temurin:17
+
+WORKDIR /app
+
+COPY --from=build /app/target/*.jar app.jar
+
+ENTRYPOINT ["java", "-jar", "app.jar"]
