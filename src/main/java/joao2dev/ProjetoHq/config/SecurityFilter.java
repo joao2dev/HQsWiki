@@ -35,10 +35,10 @@ public class SecurityFilter extends OncePerRequestFilter {
     public void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
                                  FilterChain filterChain) throws ServletException, IOException {
 
-        String token = extrairTokenDoCookie(request); // ✅ tenta cookie primeiro
+        String token = extrairTokenDoCookie(request);
 
         if (token == null) {
-            // ✅ fallback para header Authorization (Postman, APIs externas)
+
             String authHeader = request.getHeader("Authorization");
             if (StringUtils.hasText(authHeader) && authHeader.startsWith("Bearer ")) {
                 token = authHeader.substring(7);
@@ -55,7 +55,7 @@ public class SecurityFilter extends OncePerRequestFilter {
             }
         }
 
-        filterChain.doFilter(request, response); // ✅ sempre continua a cadeia
+        filterChain.doFilter(request, response);
     }
 
     private String extrairTokenDoCookie(HttpServletRequest request) {
