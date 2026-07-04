@@ -9,6 +9,7 @@ import joao2dev.ProjetoHq.dto.UserResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,8 +35,12 @@ public class UserController {
 
     @PostMapping("/login")
     public String login(@ModelAttribute LoginRequest user, HttpServletResponse response) {
-        String token = service.login(user);
-
+        String token;
+        try {
+            token = service.login(user);
+        } catch (BadCredentialsException e) {
+            return "redirect:/auth/ui/login?erro=true";
+        }
 
         Cookie cookie = new Cookie("jwt", token);
         cookie.setHttpOnly(true);

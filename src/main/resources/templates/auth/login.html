@@ -140,6 +140,9 @@
     <p class="register-link">
         Não tem conta? <a th:href="@{/auth/ui/registrar}">Cadastrar</a>
     </p>
+    <p th:if="${param.erro}" style="color: red; text-align: center; margin-bottom: 10px;">
+        Email ou senha inválidos.
+    </p>
 </div>
 
 </body>
