@@ -1,65 +1,10 @@
 # HQsWiki
 
-Sistema de gerenciamento de Histórias em Quadrinhos com biblioteca pessoal por usuário, desenvolvido com Spring Boot com interface web via Thymeleaf e autenticação JWT.
+Sistema de gerenciamento de Histórias em Quadrinhos com biblioteca pessoal por usuário, desenvolvido com Spring Boot, interface web via Thymeleaf e autenticação JWT.
 
-## Vídeo demonstração
-[![Assistir no YouTube](https://img.shields.io/badge/YouTube-Assistir%20Demo-red?logo=youtube)](https://youtu.be/Fr5Gl7e5l10)
+**Deploy em produção:** [https://hqswiki.onrender.com](https://hqswiki.onrender.com)
 
----
-
-## Docker
-
-Imagem disponível no Docker Hub:
-
-```bash
-docker pull joao2dev/hqswiki
-```
-
-[![Docker Hub](https://img.shields.io/docker/pulls/joao2dev/hqswiki?logo=docker)](https://hub.docker.com/r/joao2dev/hqswiki)
-
-### Rodando com Docker Compose
-
-Crie um arquivo `.env` na raiz do projeto:
-
-```env
-DATABASE_URL=jdbc:postgresql://db:5432/projetohq
-DATABASE_USERNAME=seu_usuario
-DATABASE_PASSWORD=sua_senha
-KEY=sua_chave_secreta
-```
-
-Crie o `docker-compose.yml`:
-
-```yaml
-services:
-  db:
-    image: postgres:16
-    container_name: hqswiki-db
-    environment:
-      POSTGRES_DB: projetohq
-      POSTGRES_USER: seu_usuario
-      POSTGRES_PASSWORD: sua_senha
-    ports:
-      - "5432:5432"
-
-  app:
-    image: joao2dev/hqswiki
-    container_name: hqswiki-app
-    ports:
-      - "8080:8080"
-    env_file:
-      - .env
-    depends_on:
-      - db
-```
-
-Suba os containers:
-
-```bash
-docker compose up
-```
-
-Acesse: [http://localhost:8080/auth/ui/login](http://localhost:8080/auth/ui/login)
+> Projeto em ambiente de demonstração. Ainda sem verificação de email — ao testar, use um email fictício.
 
 ---
 
@@ -76,7 +21,6 @@ Acesse: [http://localhost:8080/auth/ui/login](http://localhost:8080/auth/ui/logi
 - JUnit
 - Maven
 - Git / GitHub
-- Docker
 
 ---
 
@@ -100,12 +44,14 @@ Acesse: [http://localhost:8080/auth/ui/login](http://localhost:8080/auth/ui/logi
 - Sessão stateless
 - Rotas protegidas com Spring Security
 - Usuário só acessa, edita e deleta suas próprias HQs
+- Falhas de autenticação (credencial inválida) são tratadas na camada de aplicação e redirecionam para a tela de login com mensagem de erro, em vez de expor erro cru do framework
 
 ---
 
 ## Endpoints REST
 
 ### Autenticação
+
 ```
 POST /auth/registrar
 POST /auth/login
@@ -113,6 +59,7 @@ GET  /auth/logout
 ```
 
 ### HQs
+
 ```
 GET    /comics
 GET    /comics/{id}
@@ -122,7 +69,9 @@ DELETE /comics/{id}
 ```
 
 ### Interface Web
+
 ```
+GET  /
 GET  /auth/ui/login
 GET  /auth/ui/registrar
 GET  /comics/ui/listar
@@ -135,27 +84,27 @@ GET  /comics/ui/deletar/{id}
 
 ---
 
-## Executando sem Docker
+## Executando o projeto localmente
 
 1. Configure as variáveis de ambiente:
 
-```env
-DATABASE_URL=jdbc:postgresql://localhost:5432/projetohq
+```
+DATABASE_URL=jdbc:postgresql://localhost:5432/hqswiki
 DATABASE_USERNAME=seu_usuario
 DATABASE_PASSWORD=sua_senha
-KEY=sua_chave_secreta
+KEY=sua_chave_secreta_jwt
 ```
 
 2. Execute:
 
-```bash
+```
 mvn spring-boot:run
 ```
 
 3. Acesse:
 
 ```
-http://localhost:8080/auth/ui/login
+http://localhost:8080
 ```
 
 ---
