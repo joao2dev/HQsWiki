@@ -2,6 +2,7 @@
 
 Sistema de gerenciamento de Histórias em Quadrinhos com biblioteca pessoal por usuário, desenvolvido com Spring Boot, interface web via Thymeleaf e autenticação JWT.
 
+**link do deploy:** link(https://hqswiki.onrender.com) 
 
 
 > Projeto em ambiente de demonstração. Ainda sem verificação de email — ao testar, use um email fictício.
